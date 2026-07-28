@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test hostingu statycznego</title>
+<meta name="description" content="Strona testowa do weryfikacji deployu statycznego.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%2314213D'/><rect x='3' y='7' width='10' height='2' fill='%23E8871E'/></svg>">
+<style>
+  :root{
+    --paper:#E9EBEF;
+    --card:#FFFFFF;
+    --ink:#14213D;
+    --signal:#C25E0B;
+    --muted:#6A7285;
+    --rule:#14213D;
+    --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  }
+
+  *{box-sizing:border-box}
+
+  html,body{margin:0;padding:0}
+
+  body{
+    background:var(--paper);
+    background-image:
+      linear-gradient(to right,rgba(20,33,61,.05) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(20,33,61,.05) 1px,transparent 1px);
+    background-size:24px 24px;
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .card{
+    width:100%;
+    max-width:560px;
+    background:var(--card);
+    border:2px solid var(--rule);
+    box-shadow:6px 6px 0 rgba(20,33,61,.14);
+  }
+
+  .card__head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px 20px;
+    border-bottom:2px solid var(--rule);
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  .build{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--signal);
+    white-space:nowrap;
+  }
+
+  .card__body{padding:28px 20px 8px}
+
+  h1{
+    margin:0;
+    font-size:clamp(30px,7vw,44px);
+    font-weight:650;
+    letter-spacing:-.03em;
+    line-height:1.04;
+  }
+
+  h1 .status{
+    display:inline-block;
+    border-bottom:4px solid var(--signal);
+    padding-bottom:2px;
+  }
+
+  .lede{
+    margin:14px 0 26px;
+    max-width:44ch;
+    font-size:15px;
+    color:var(--muted);
+  }
+
+  dl{
+    margin:0;
+    border-top:1px solid rgba(20,33,61,.18);
+    font-family:var(--mono);
+    font-size:13px;
+  }
+
+  .row{
+    display:flex;
+    gap:12px;
+    align-items:baseline;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid rgba(20,33,61,.12);
+  }
+
+  dt{
+    color:var(--muted);
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-size:11px;
+    flex:0 0 auto;
+  }
+
+  dd{
+    margin:0;
+    text-align:right;
+    word-break:break-all;
+    min-width:0;
+  }
+
+  dd[data-state="tak"]{color:var(--signal)}
+
+  .card__foot{
+    padding:16px 20px 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 20px;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .hint{
+    font-size:12px;
+    color:var(--muted);
+    max-width:34ch;
+  }
+
+  button{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--card);
+    background:var(--ink);
+    border:2px solid var(--ink);
+    padding:9px 16px;
+    cursor:pointer;
+  }
+
+  button:hover{background:var(--signal);border-color:var(--signal)}
+
+  :focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+
+  .blink{animation:pulse 1.6s steps(2,end) infinite}
+
+  @keyframes pulse{50%{opacity:.25}}
+
+  @media (prefers-reduced-motion:reduce){
+    .blink{animation:none}
+  }
+
+  @media (max-width:420px){
+    .row{flex-direction:column;align-items:flex-start;gap:2px}
+    dd{text-align:left}
+  }
+</style>
+</head>
+<body>
+
+<main class="card">
+  <div class="card__head">
+    <span class="eyebrow">Strona testowa</span>
+    <span class="build">BUILD 001 &middot; 2026-07-28</span>
+  </div>
+
+  <div class="card__body">
+    <h1>Deploy <span class="status">działa</span></h1>
+    <p class="lede">
+      Jeśli widzisz tę stronę, host serwuje pliki z repozytorium.
+      Poniżej dane odczytane w przeglądarce — potwierdzają, że HTML i JavaScript wykonały się poprawnie.
+    </p>
+
+    <dl>
+      <div class="row"><dt>Adres</dt><dd id="v-url">—</dd></div>
+      <div class="row"><dt>Host</dt><dd id="v-host">—</dd></div>
+      <div class="row"><dt>HTTPS</dt><dd id="v-tls">—</dd></div>
+      <div class="row"><dt>Czas ładowania</dt><dd id="v-perf">—</dd></div>
+      <div class="row"><dt>Zegar</dt><dd id="v-clock" class="blink">—</dd></div>
+    </dl>
+  </div>
+
+  <div class="card__foot">
+    <p class="hint">
+      Podbij numer BUILD przed każdym pushem. Jeśli po odświeżeniu numer się nie zmienił — serwuje ci się cache, nie nowa wersja.
+    </p>
+    <button id="reload" type="button">Odśwież bez cache</button>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var set = function (id, value, flag) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = value;
+      if (flag) el.setAttribute('data-state', flag);
+    };
+
+    set('v-url', location.href);
+    set('v-host', location.hostname || '(plik lokalny)');
+
+    var secure = location.protocol === 'https:';
+    set('v-tls', secure ? 'tak' : 'nie', secure ? 'tak' : null);
+
+    var nav = performance.getEntriesByType('navigation')[0];
+    set('v-perf', nav ? Math.round(nav.duration) + ' ms' : 'brak danych');
+
+    var tick = function () {
+      set('v-clock', new Date().toLocaleString('pl-PL'));
+    };
+    tick();
+    setInterval(tick, 1000);
+
+    document.getElementById('reload').addEventListener('click', function () {
+      location.href = location.pathname + '?cb=' + Date.now();
+    });
+  })();
+</script>
+
+</body>
+</html>
